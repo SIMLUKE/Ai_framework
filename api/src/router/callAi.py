@@ -1,86 +1,74 @@
-import requests
+import json
+import re
 from pydantic import BaseModel
-from src.router.broadcast import broadcast
 from fastapi import APIRouter
-from fastapi import HTTPException
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-import asyncio
 
 
 class Item(BaseModel):
-    baseLanguage: str
     text: str
-
-
-class TradPanel:
-    baseLanguage: str
-    destinationLanguage: str
-    text: str
-
-    def __init__(self, baseLanguage, destinationLanguage, text):
-        self.baseLanguage = baseLanguage
-        self.destinationLanguage = destinationLanguage
-        self.text = text
 
 
 prompt_router = APIRouter()
 
-language_map = {
-    "EN": "english",
-    "FR": "french",
-    "CH": "chinese",
-    "ES": "spanish",
-}
-
 
 @prompt_router.post("/prompt")
 async def prompt(item: Item):
-    tasks = []
+    return query_ollama(item.text)
 
-    for code, _ in language_map.items():
-        tasks.append(
-            generate(
-                TradPanel(
-                    baseLanguage=item.baseLanguage,
-                    destinationLanguage=code,
-                    text=item.text,
-                )
-            )
+
+def parseResponse(response):
+    man_pref = "https://fr.manpages.org/"
+    google_pref = "https://www.google.com/search?q="
+    new_response = {}
+    new_response["type"] = response["analysis"]["type"]
+    new_response["valid"] = response["valid"]
+    if response["analysis"]["type"] == "code":
+        new_response["response"] = Query_bigollama(response["analysis"]["query"])
+    if response["analysis"]["type"] == "man_page":
+        new_response["response"] = f"{man_pref}{response['analysis']['query']}"
+    if response["analysis"]["type"] == "search":
+        new_response["response"] = (
+            f"{google_pref}{response['analysis']['query'].replace(' ', '+')}"
         )
-    await asyncio.gather(*tasks)
+    if response["analysis"]["type"] == "error":
+        new_response["response"] = response["analysis"]["query"]
+    return new_response
 
 
-async def generate(item: TradPanel):
-    model = "7shi/llama-translate:8b-q4_K_M"
+def query_ollama(question):
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("human", 'Now process the following input:\n"{question}"'),
+        ]
+    )
+
+    llm = OllamaLLM(model="question_bot", base_url="ai:11434")
+    chain = prompt | llm
+
     try:
-        llm = OllamaLLM(model=model, base_url="ai:11434")
+        response = chain.invoke({"question": question})
+        print(response)
+        return parseResponse(json.loads(response))
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
-        template = """### Instruction:
-Translate {baseLanguage} to {destinationLanguage}.
 
-### Input:
-{text}
+def Query_bigollama(question):
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("human", 'Awnser this:\n"{question}"'),
+        ]
+    )
 
-### Response:
-"""
+    llm = OllamaLLM(model="deepseek-r1:1.5b", base_url="ai:11434")
+    chain = prompt | llm
 
-        prompt = ChatPromptTemplate.from_template(template)
-        chain = prompt | llm
-        idx = 0
-        async for chunk in chain.astream(
-            {
-                "baseLanguage": item.baseLanguage,
-                "destinationLanguage": language_map[item.destinationLanguage],
-                "text": item.text,
-            }
-        ):
-            await broadcast(
-                item.destinationLanguage,
-                f'{{"start": {str(idx == 0).lower()}, "data": "{chunk}"}}',
-            )
-            idx += 1
-    except requests.RequestException as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error communicating with Ollama: {str(e)}"
-        )
+    try:
+        response = chain.invoke({"question": question})
+        return re.sub(r"<think>.*?</think>", "", response, flags=re.DOTALL)
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
