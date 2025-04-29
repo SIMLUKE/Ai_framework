@@ -2,35 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.App {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    position: fixed;
-    right: 0;
-    --message-background: #fff000;
-    --message-text: black;
-}
-
 .app-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    width: 100%;
-    border: 2px black solid;
-}
-
-.select-container {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 20px;
-    border-bottom: 2px solid #fff000;
-    position: sticky;
-    width: 100%;
-}
-
-.select {
-    width: 80%;
+    justify-content: center;
+    height: 100%;
+    min-width: 100vh;
+    background-image: url("/app/public/background.png");
+    background-size: cover;
+    --good-message-text: #317529;
+    --good-message-background: #aef5f4;
+    --search-message-text: #4de8d6;
+    --search-message-background: #260542;
+    --man-message-text: #542c0c;
+    --man-message-background: #7a7b80;
+    --not-addapted-text: #e82210;
+    --not-addapted-background: black;
+    --message-text: black;
+    --message-background: white;
 }
