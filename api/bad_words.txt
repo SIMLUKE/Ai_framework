@@ -1,12 +1,81 @@
-merci
-thank
 bonjour
-hello
-salu
-aurevoir
-aurvoir
-bye
-wesh
-yo
-sup
-zup
+salut  
+coucou  
+hello  
+hi  
+hey  
+yo  
+sup  
+wesh  
+zup  
+wassup  
+hy  
+good morning  
+good afternoon  
+good evening  
+bonsoir  
+bienvenue  
+welcome  
+nice to meet you  
+enchanté(e)  
+à bientôt  
+see you soon  
+see ya  
+à plus (à+)  
+later  
+bye  
+au revoir  
+goodbye  
+farewell  
+take care  
+bonne journée  
+have a good day  
+bonne soirée  
+good night  
+bonne nuit  
+sleep well  
+merci  
+thanks  
+thank you  
+thx  
+cheers  
+thanks a lot  
+thank u  
+stfu  
+gtfo  
+shut up  
+silence  
+tais-toi  
+peace out  
+adieu  
+cya  
+à demain  
+see you tomorrow  
+salutations  
+greetings  
+howdy  
+what's up  
+how are you  
+comment ça va  
+ça va  
+ok  
+okay  
+cool  
+d'accord  
+alright  
+no problem  
+pas de souci  
+de rien  
+you're welcome  
+my pleasure  
+with pleasure  
+pardon  
+sorry  
+excuse me  
+excusez-moi  
+my bad  
+oops  
+whoops  
+je suis désolé(e)  
+apologies  
+no worries
