@@ -1,10 +1,24 @@
 import json
 import re
-from is_query_simple import is_query_simple
 from pydantic import BaseModel
 from fastapi import APIRouter
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+
+
+def is_query_simple(query: str):
+    bad_words = None
+    split_query = query.split()
+
+    with open("./bad_words.txt") as file:
+        bad_words = file.read().split()
+    if len(split_query) > 5:
+        return False
+    for bad_word in bad_words:
+        for words in split_query:
+            if bad_word in words.lower():
+                return True
+    return False
 
 
 class Item(BaseModel):
@@ -17,6 +31,7 @@ prompt_router = APIRouter()
 @prompt_router.post("/prompt")
 async def prompt(item: Item):
     return query_ollama(item.text)
+
 
 def parseResponse(response):
     man_pref = "https://fr.manpages.org/"
@@ -36,16 +51,18 @@ def parseResponse(response):
         new_response["response"] = response["analysis"]["query"]
     return new_response
 
-def simple_query_answer() :
+
+def simple_query_answer():
     answer = {
-    "type": "error",
-    "valid": False,
-    "response": "You don't have to be so polite, it uses unnecessary resources"
+        "type": "error",
+        "valid": False,
+        "response": "You don't have to be so polite, it uses unnecessary resources",
     }
     return answer
 
+
 def query_ollama(question):
-    if is_query_simple(question) :
+    if is_query_simple(question):
         return simple_query_answer()
     prompt = ChatPromptTemplate.from_messages(
         [
