@@ -32,16 +32,11 @@ export default function UserInput({
       });
 
       const data = await res.json();
-      console.log({
-        user: "bot",
-        type: "ai-" + data.type,
-        content: data.response,
-      })
       setMessages((previous) => [
         ...previous,
         {
-          user: "bot",
-          type: "ai-" + data.type,
+          user: "ia",
+          type: "ia-" + data.type,
           content: data.response,
         },
       ]);
@@ -49,8 +44,8 @@ export default function UserInput({
       setMessages((previous) => [
         ...previous,
         {
-          user: "bot",
-          type: "ai-error",
+          user: "ia",
+          type: "ia-error",
           content: "An unexpected error occurred.",
         },
       ]);
