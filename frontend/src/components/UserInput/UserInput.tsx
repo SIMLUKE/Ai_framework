@@ -10,15 +10,54 @@ export default function UserInput({
   const [input, setInput] = useState<string>("");
   const [searching, setSearching] = useState<boolean>(false);
 
-  const computeInput = () => {
+  const computeInput = async () => {
     if (input.trim().length === 0) return;
     if (searching) return;
-    setMessages((previous) => {
-      return [...previous, { user: "user", type: "normal", content: input }];
-    });
-    setInput("");
-  };
 
+    setMessages((previous) => [
+      ...previous,
+      { user: "user", type: "normal", content: input },
+    ]);
+
+    setInput("");
+    setSearching(true);
+
+    try {
+      const res = await fetch("http://0.0.0.0:8080/prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: input }),
+      });
+
+      const data = await res.json();
+      console.log({
+        user: "bot",
+        type: "ai-" + data.type,
+        content: data.response,
+      })
+      setMessages((previous) => [
+        ...previous,
+        {
+          user: "bot",
+          type: "ai-" + data.type,
+          content: data.response,
+        },
+      ]);
+    } catch (error) {
+      setMessages((previous) => [
+        ...previous,
+        {
+          user: "bot",
+          type: "ai-error",
+          content: "An unexpected error occurred.",
+        },
+      ]);
+    } finally {
+      setSearching(false);
+    }
+  };
   return (
     <div className="input-container">
       <textarea
