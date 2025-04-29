@@ -33,26 +33,26 @@ services:
       - "11434:11434"
     networks:
       - ai_network
-  # frontend:
-  #   container_name: frontend
-  #   env_file: ".env"
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - "./frontend:/app"
-  #   build: "./frontend"
-  #   restart: always
-  #   develop:
-  #     watch:
-  #       - path: ./frontend/src
-  #         action: sync
-  #         target: /app
-  #       - path: ./frontend
-  #         action: rebuild
-  #         ignore:
-  #           - ./frontend/app
-  #   networks:
-  #     - ai_network
+  frontend:
+    container_name: frontend
+    env_file: ".env"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./frontend:/app"
+    build: "./frontend"
+    restart: always
+    develop:
+      watch:
+        - path: ./frontend/src
+          action: sync
+          target: /app
+        - path: ./frontend
+          action: rebuild
+          ignore:
+            - ./frontend/app
+    networks:
+      - ai_network
 
 networks:
   ai_network:
