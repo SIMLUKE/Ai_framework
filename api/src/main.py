@@ -23,22 +23,30 @@ app.include_router(prompt_router)
 app.include_router(broadcast_router)
 
 
+def check_if_model_exist(model_name, model_array):
+    for model in model_array:
+        if (model['name'] == model_name):
+           return True
+    return False
+
 def check_for_models():
-    models_to_install = {"name": ""}
-    host = "ai:11434"
+    models_to_install = [{"name": "smollm2:latest"}]
+    host = f"ai:{os.getenv("IA_PORT")}"
 
     get_models_url = f"http://{host}/api/tags"
     install_models_url = f"http://{host}/api/pull"
 
-    get_response = requests.get(get_models_url)
-    if get_response.status_code == 200:
-        models = json.loads(get_response.content.decode("utf-8"))
-        if models.get("models") == []:
-            requests.post(install_models_url, json=models_to_install)
+    for model in models_to_install:
+        get_response = requests.get(get_models_url)
+        if get_response.status_code == 200:
+            models = json.loads(get_response.content.decode("utf-8"))
+            if (not check_if_model_exist(model["name"], models["models"])):
+                requests.post(install_models_url, json=model)
 
 
 if __name__ == "__main__":
-    # check_for_models()
+    print("start")
+    check_for_models()
     uvicorn.run(
         "src.main:app",
         host=os.getenv("API_HOST"),
