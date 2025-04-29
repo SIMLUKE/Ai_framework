@@ -5,6 +5,7 @@
     margin-bot: 12px;
     width: 100%;
     gap: 12px;
+    overflow-y: scroll;
 }
 
 .message-ia-code {

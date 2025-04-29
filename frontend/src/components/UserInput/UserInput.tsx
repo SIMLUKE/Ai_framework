@@ -11,7 +11,7 @@ export default function UserInput({
   const [searching, setSearching] = useState<boolean>(false);
 
   const computeInput = () => {
-    if (input.length === 0) return;
+    if (input.trim().length === 0) return;
     if (searching) return;
     setMessages((previous) => {
       return [...previous, { user: "user", type: "normal", content: input }];
@@ -27,7 +27,10 @@ export default function UserInput({
           setInput(event.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") computeInput();
+          if (e.key === "Enter") {
+            e.preventDefault();
+            computeInput();
+          }
         }}
         value={input}
       ></textarea>
