@@ -4,11 +4,14 @@ import "./UserInput.css";
 
 export default function UserInput({
   setMessages,
+  searching,
+  setSearching,
 }: {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  searching: boolean;
+  setSearching: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [input, setInput] = useState<string>("");
-  const [searching, setSearching] = useState<boolean>(false);
 
   const computeInput = async () => {
     if (input.trim().length === 0) return;
@@ -32,11 +35,6 @@ export default function UserInput({
       });
 
       const data = await res.json();
-      console.log({
-        user: "bot",
-        type: "ai-" + data.type,
-        content: data.response,
-      })
       setMessages((previous) => [
         ...previous,
         {

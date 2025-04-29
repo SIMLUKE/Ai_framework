@@ -4,6 +4,7 @@ import Messages, { Message } from "../MessageContent.tsx/Message";
 import UserInput from "../UserInput/UserInput";
 
 export default function ChatBox() {
+  const [searching, setSearching] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       user: "ia",
@@ -34,8 +35,12 @@ export default function ChatBox() {
   ]);
   return (
     <div className="chat-box">
-      <Messages messages={messages}></Messages>
-      <UserInput setMessages={setMessages}></UserInput>
+      <Messages messages={messages} searching={searching}></Messages>
+      <UserInput
+        setMessages={setMessages}
+        searching={searching}
+        setSearching={setSearching}
+      ></UserInput>
     </div>
   );
 }

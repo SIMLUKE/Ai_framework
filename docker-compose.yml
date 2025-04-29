@@ -1,38 +1,38 @@
 services:
-  api:
-    container_name: api
-    env_file: ".env"
-    ports:
-      - "8080:8080"
-      - "8090:8090"
-    build:
-      context: "./api"
-    volumes:
-      - ./api:/app
-    restart: always
-    develop:
-      watch:
-        - path: ./api/src
-          action: sync
-          target: /app
-        - path: ./api
-          action: rebuild
-          ignore:
-            - ./api/src
-    networks:
-      - ai_network
-    depends_on:
-      - ai
-  ai:
-    container_name: ai
-    build:
-      context: ./ai
-      dockerfile: Dockerfile
-    env_file: ".env"
-    ports:
-      - "11434:11434"
-    networks:
-      - ai_network
+  # api:
+  #   container_name: api
+  #   env_file: ".env"
+  #   ports:
+  #     - "8080:8080"
+  #     - "8090:8090"
+  #   build:
+  #     context: "./api"
+  #   volumes:
+  #     - ./api:/app
+  #   restart: always
+  #   develop:
+  #     watch:
+  #       - path: ./api/src
+  #         action: sync
+  #         target: /app
+  #       - path: ./api
+  #         action: rebuild
+  #         ignore:
+  #           - ./api/src
+  #   networks:
+  #     - ai_network
+  #   depends_on:
+  #     - ai
+  # ai:
+  #   container_name: ai
+  #   build:
+  #     context: ./ai
+  #     dockerfile: Dockerfile
+  #   env_file: ".env"
+  #   ports:
+  #     - "11434:11434"
+  #   networks:
+  #     - ai_network
   frontend:
     container_name: frontend
     env_file: ".env"

@@ -7,7 +7,13 @@ export interface Message {
   content: string;
 }
 
-export default function Messages({ messages }: { messages: Message[] }) {
+export default function Messages({
+  messages,
+  searching,
+}: {
+  messages: Message[];
+  searching: boolean;
+}) {
   const scrollRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,7 +22,7 @@ export default function Messages({ messages }: { messages: Message[] }) {
       behavior: "smooth",
       top: scrollRef.current.scrollHeight,
     });
-  }, [messages]);
+  }, [messages, searching]);
 
   return (
     <div ref={scrollRef} className="message-container">
@@ -33,6 +39,7 @@ export default function Messages({ messages }: { messages: Message[] }) {
           </div>
         );
       })}
+      {searching ? <div className="message-ia-normal">...</div> : null}
     </div>
   );
 }
