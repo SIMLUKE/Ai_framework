@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    right: 0;
+    --message-background: #fff000;
+    --message-text: black;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    border: 2px black solid;
+}

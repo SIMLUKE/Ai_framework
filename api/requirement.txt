@@ -1,0 +1,11 @@
+fastapi[standard]
+uvicorn
+requests
+
+langchain
+langchain-community
+langchain-core
+langchain-ollama
+pytesseract
+tiktoken
+websockets
