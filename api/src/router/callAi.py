@@ -1,4 +1,5 @@
 import json
+import re
 from pydantic import BaseModel
 from fastapi import APIRouter
 from langchain_ollama import OllamaLLM
@@ -21,7 +22,6 @@ def parseResponse(response):
     man_pref = "https://fr.manpages.org/"
     google_pref = "https://www.google.com/search?q="
     new_response = {}
-    print(response)
     new_response["type"] = response["analysis"]["type"]
     new_response["valid"] = response["valid"]
     if response["analysis"]["type"] == "code":
@@ -32,6 +32,8 @@ def parseResponse(response):
         new_response["response"] = (
             f"{google_pref}{response['analysis']['query'].replace(' ', '+')}"
         )
+    if response["analysis"]["type"] == "error":
+        new_response["response"] = response["analysis"]["query"]
     return new_response
 
 
@@ -47,6 +49,7 @@ def query_ollama(question):
 
     try:
         response = chain.invoke({"question": question})
+        print(response)
         return parseResponse(json.loads(response))
     except Exception as e:
         print(f"Error: {e}")
@@ -60,12 +63,12 @@ def Query_bigollama(question):
         ]
     )
 
-    llm = OllamaLLM(model="deepskeep", base_url="ai:11434")
+    llm = OllamaLLM(model="deepseek-r1:1.5b", base_url="ai:11434")
     chain = prompt | llm
 
     try:
         response = chain.invoke({"question": question})
-        return json.loads(response)
+        return re.sub(r"<think>.*?</think>", "", response, flags=re.DOTALL)
     except Exception as e:
         print(f"Error: {e}")
         return None

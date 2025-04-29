@@ -4,7 +4,6 @@ import uvicorn
 import os
 from src.router.router import global_router
 from src.router.callAi import prompt_router
-from src.router.broadcast import broadcast_router
 import requests
 import json
 
@@ -20,7 +19,6 @@ app.add_middleware(
 
 app.include_router(global_router)
 app.include_router(prompt_router)
-app.include_router(broadcast_router)
 
 
 def create_model(ai_info):
@@ -61,7 +59,7 @@ def check_if_model_exist(model_name, model_array):
 
 
 def check_for_models():
-    models_to_install = [{"name": "smollm2:latest"}]
+    models_to_install = [{"name": "deepseek-r1:1.5b"}]
     models_to_create = [
         {
             "name": "question_bot",
