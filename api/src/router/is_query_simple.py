@@ -1,6 +1,6 @@
 import sys
 
-def is_querry_simple(query : str) :
+def is_query_simple(query : str) :
     bad_words = None
     split_query = query.split()
 
@@ -15,7 +15,7 @@ def is_querry_simple(query : str) :
     return False
 
 def main() :
-    print(is_querry_simple(sys.argv[1]))
+    print(is_query_simple(sys.argv[1]))
 
 if __name__ == "__main__" :
     main()

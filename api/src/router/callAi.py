@@ -1,5 +1,6 @@
 import json
 import re
+from is_query_simple import is_query_simple
 from pydantic import BaseModel
 from fastapi import APIRouter
 from langchain_ollama import OllamaLLM
@@ -16,7 +17,6 @@ prompt_router = APIRouter()
 @prompt_router.post("/prompt")
 async def prompt(item: Item):
     return query_ollama(item.text)
-
 
 def parseResponse(response):
     man_pref = "https://fr.manpages.org/"
@@ -36,17 +36,24 @@ def parseResponse(response):
         new_response["response"] = response["analysis"]["query"]
     return new_response
 
+def simple_query_answer() :
+    answer = {
+    "type": "error",
+    "valid": False,
+    "response": "You don't have to be so polite, it uses unnecessary resources"
+    }
+    return answer
 
 def query_ollama(question):
+    if is_query_simple(question) :
+        return simple_query_answer()
     prompt = ChatPromptTemplate.from_messages(
         [
             ("human", 'Now process the following input:\n"{question}"'),
         ]
     )
-
     llm = OllamaLLM(model="question_bot", base_url="ai:11434")
     chain = prompt | llm
-
     try:
         response = chain.invoke({"question": question})
         print(response)
