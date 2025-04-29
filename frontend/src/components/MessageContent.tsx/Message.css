@@ -14,7 +14,7 @@
     text-align: left;
     background-color: var(--good-message-background);
     color: var(--good-message-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
     margin-bot: 12px;
@@ -25,7 +25,7 @@
     text-align: left;
     background-color: var(--search-message-background);
     color: var(--search-message-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
     margin-bot: 12px;
@@ -36,7 +36,7 @@
     text-align: left;
     background-color: var(--man-message-background);
     color: var(--man-message-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
     margin-bot: 12px;
@@ -47,7 +47,7 @@
     text-align: left;
     background-color: var(--not-addapted-background);
     color: var(--not-addapted-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
 }
@@ -57,7 +57,7 @@
     text-align: left;
     background-color: var(--message-background);
     color: var(--message-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
 }
@@ -67,7 +67,7 @@
     text-align: left;
     background-color: var(--message-background);
     color: var(--message-text);
-    max-width: 60%;
+    max-width: 75%;
     border-radius: 12px;
     padding: 12px;
 }

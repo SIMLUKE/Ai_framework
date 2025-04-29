@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./Message.css";
+import ReactMarkdown from "react-markdown";
 
 export interface Message {
   user: string;
@@ -35,7 +36,7 @@ export default function Messages({
                 : "message-normal"
             }
           >
-            {message.content}
+            <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
         );
       })}
