@@ -1,0 +1,72 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    margin-bot: 12px;
+    width: 100%;
+    gap: 12px;
+    overflow-y: scroll;
+}
+
+.message-ia-code {
+    align-self: start;
+    text-align: left;
+    background-color: var(--good-message-background);
+    color: var(--good-message-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bot: 12px;
+}
+
+.message-ia-search {
+    align-self: start;
+    text-align: left;
+    background-color: var(--search-message-background);
+    color: var(--search-message-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bot: 12px;
+}
+
+.message-ia-man_page {
+    align-self: start;
+    text-align: left;
+    background-color: var(--man-message-background);
+    color: var(--man-message-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bot: 12px;
+}
+
+.message-ia-error {
+    align-self: start;
+    text-align: left;
+    background-color: var(--not-addapted-background);
+    color: var(--not-addapted-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.message-ia-normal {
+    align-self: start;
+    text-align: left;
+    background-color: var(--message-background);
+    color: var(--message-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.message-normal {
+    align-self: end;
+    text-align: left;
+    background-color: var(--message-background);
+    color: var(--message-text);
+    max-width: 60%;
+    border-radius: 12px;
+    padding: 12px;
+}

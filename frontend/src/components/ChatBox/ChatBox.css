@@ -1,0 +1,11 @@
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    height: 90%;
+    margin-top: 5vh;
+    border-radius: 24px;
+    background-color: #baf7e6;
+    overflow: hidden;
+}
