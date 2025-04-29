@@ -1,0 +1,5 @@
+{
+    "temperature": 0.2,
+    "num_ctx": 1024,
+    "top_k": 20
+}

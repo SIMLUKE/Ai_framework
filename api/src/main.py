@@ -36,11 +36,14 @@ def create_model(ai_info):
 
     with open(ai_info["SystemPath"], "r") as file:
         sys_content = file.read()
+    with open(ai_info["ParameterPath"], "r") as file:
+        params_content = file.read()
 
     payload = {
         "name": ai_info["name"],
         "from": ai_info["Source"],
         "system": sys_content,
+        "parameters": json.loads(params_content),
     }
 
     response = requests.post(url, json=payload, stream=True)
@@ -64,6 +67,7 @@ def check_for_models():
             "name": "question_bot",
             "SystemPath": "./QuestionBotSystem",
             "Source": "smollm2:latest",
+            "ParameterPath": "./QuestionBotParameter",
         }
     ]
 
