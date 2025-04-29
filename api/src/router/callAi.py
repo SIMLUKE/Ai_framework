@@ -40,7 +40,7 @@ def simple_query_answer() :
     answer = {
     "type": "error",
     "valid": False,
-    "response": "You don't have to be so polite, its use unnecessary resources"
+    "response": "You don't have to be so polite, it uses unnecessary resources"
     }
     return answer
 
